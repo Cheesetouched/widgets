@@ -200,8 +200,8 @@ const ClaimButton: React.FC<ClaimPageProps> = ({
   const owned = useQuery(
     ["numbers", "owned", { address }],
     async () => {
-      const owned = await module?.getOwned(address || "");
-      return BigNumber.from(owned?.length || 0);
+      const _owned = await module?.getOwned(address || "");
+      return BigNumber.from(_owned?.length || 0);
     },
     {
       enabled: !!module && !!address,
@@ -251,7 +251,7 @@ const ClaimButton: React.FC<ClaimPageProps> = ({
     parseInt(activeClaimCondition.data?.availableSupply) === 0;
 
   useEffect(() => {
-    let t = setTimeout(() => setClaimSuccess(false), 3000);
+    const t = setTimeout(() => setClaimSuccess(false), 3000);
     return () => clearTimeout(t);
   }, [claimSuccess]);
 
@@ -582,8 +582,8 @@ const BundleDropWidget: React.FC<BundleDropWidgetProps> = ({
   const owned = useQuery(
     ["numbers", "owned", { address }],
     async () => {
-      const owned = await dropModule?.getOwned(address || "");
-      return BigNumber.from(owned?.length || 0);
+      const _owned = await dropModule?.getOwned(address || "");
+      return BigNumber.from(_owned?.length || 0);
     },
     {
       enabled: !!dropModule && !!address,
@@ -660,7 +660,8 @@ const getBool = (param: string, defaultVal: boolean) => {
 const App: React.FC = () => {
   const expectedChainId = Number(urlParams.get("chainId"));
   const contractAddress = urlParams.get("contract") || "";
-  const rpcUrl = urlParams.get("rpcUrl") || ""; //default to expectedChainId default
+  // default to expectedChainId default
+  const rpcUrl = urlParams.get("rpcUrl") || "";
   const tokenId = urlParams.get("tokenId") || "0";
   const relayUrl = urlParams.get("relayUrl") || "";
 
@@ -672,7 +673,7 @@ const App: React.FC = () => {
 
   const connectors = useConnectors(expectedChainId, rpcUrl);
 
-  let ipfsGateway = parseIpfsGateway(urlParams.get("ipfsGateway") || "");
+  const ipfsGateway = parseIpfsGateway(urlParams.get("ipfsGateway") || "");
 
   return (
     <>
